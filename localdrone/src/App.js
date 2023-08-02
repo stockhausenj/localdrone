@@ -1,3 +1,5 @@
+import FindButton from './FindButton';
+import BeButton from './BeButton';
 import drone from './drone.svg';
 import './App.css';
 
@@ -9,6 +11,10 @@ function App() {
         <p>
           Find drone pilots near you! Soon...
         </p>
+    <div>
+      <FindButton />
+      <BeButton />
+    </div>
       </header>
     </div>
   );

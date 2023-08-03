@@ -7,7 +7,7 @@ const BeButton = () => {
     backgroundColor: isHovered ? '#adadad' : 'transparent',
     border: '1px solid #333',
     color: isHovered ? '#000' : '#fff',
-    padding: '10px 20px',
+    padding: '20px 40px',
     borderRadius: '5px',
     cursor: 'pointer',
     fontSize: '16px',

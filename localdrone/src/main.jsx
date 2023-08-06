@@ -5,20 +5,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./index.css";
-import Root, { 
-  loader as rootLoader,
-  action as rootAction,
-} from "./routes/root";
+import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import Contact, {
-  loader as contactLoader,
-  action as contactAction,
-} from "./routes/contact";
-import EditContact,
-{
-  action as editAction,
-} from "./routes/edit";
-import { action as destroyAction } from "./routes/destroy";
+import Pilots from "./routes/pilots";
+import Missions from "./routes/missions";
 import Index from "./routes/index";
 
 const router = createBrowserRouter([
@@ -26,8 +16,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,
-    action: rootAction,
     children: [
       {
         errorElement: <ErrorPage />,
@@ -37,20 +25,12 @@ const router = createBrowserRouter([
             element: <Index />
           },
           {
-            path: "contacts/:contactId",
-            element: <Contact />,
-            loader: contactLoader,
-            action: contactAction,
+            path: "pilots",
+            element: <Pilots />,
           },
           {
-            path: "contacts/:contactId/edit",
-            element: <EditContact />,
-            loader: contactLoader,
-            action: editAction,
-          },
-          {
-            path: "contacts/:contactId/destroy",
-            action: destroyAction,
+            path: "missions",
+            element: <Missions />,
           },
         ],
       },

@@ -1,2 +1,3 @@
 # localdrone
-localdrone.io
+
+Create or find a mission.

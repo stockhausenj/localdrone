@@ -1,0 +1,5 @@
+name = "my-worker"
+
+workers_dev = false
+
+route = { pattern = "localdrone.io/*", zone_name = "localdrone.io" }

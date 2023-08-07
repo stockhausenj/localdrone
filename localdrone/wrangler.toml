@@ -1,6 +1,0 @@
-name = "my-worker"
-main = "functions/helloworld.js"
-
-workers_dev = false
-
-route = { pattern = "localdrone.io/*", zone_name = "localdrone.io" }

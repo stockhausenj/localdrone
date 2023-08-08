@@ -3,7 +3,7 @@ import {
     useLoaderData,
     useFetcher,
   } from "react-router-dom";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getPilots } from "../pilots";
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
@@ -55,16 +55,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
-function createData(username, zipcode, missionsCompleted, lastLogin) {
-    return { username, zipcode, missionsCompleted, lastLogin};
-}
-  
-const rows = [
-  createData('Jay', 98033, 32, '8/2/2023'),
-  createData('Cheech', 98059, 30, '7/5/2022'),
-];
-
 const services = [
   {
     value: 'property',
@@ -76,7 +66,20 @@ const services = [
   },
 ];
 
-export default function Pilots() {       
+export default function Pilots() {     
+  const [tableData, setTableData] = useState([]);
+  const apiUrl = '/api/get-users';
+  const fetchUsers = async () => {
+    const response = await fetch(apiUrl);
+    const json = await response.json();
+    console.log(json);
+    setTableData(json);
+  }
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   return (
     <div id="pilots">
       <div id="search">
@@ -129,7 +132,7 @@ export default function Pilots() {
               </StyledTableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {tableData.map((row) => (
                 <TableRow key={row.username}>
                   <TableCell component="th" scope="row">
                       {row.username}

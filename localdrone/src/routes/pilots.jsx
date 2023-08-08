@@ -14,8 +14,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
+import RefreshIcon from '@mui/icons-material/Refresh';
   
 export async function action({ request, params }) {
   let formData = await request.formData();
@@ -121,6 +123,9 @@ export default function Pilots() {
         </Box>
       </div>
       <div id="data">
+      <Button variant="contained" color="primary" startIcon={<RefreshIcon />} onClick={fetchUsers}>
+        Refresh
+      </Button>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="simple table">
             <TableHead>

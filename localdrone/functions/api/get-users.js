@@ -21,16 +21,10 @@ export async function onRequest(context) {
 
     const collection = mongo.db("localdrone").collection("users");
 
-    console.log(collection);
-
     const localdroneUsers = await collection.find({});
-
-    console.log(localdroneUsers);
 
     const json = JSON.stringify(localdroneUsers, null, 2);
     
-    console.log(json);
-
     return new Response(json, {
       headers: {
         "content-type": "application/json;charset=UTF-8",

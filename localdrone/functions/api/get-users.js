@@ -17,7 +17,7 @@ export async function onRequest(context) {
 
     const user = await app.logIn(credentials);
 
-    const mongo = app.currentUser.mongoClient(DATA_SOURCE_NAME);
+    const mongo = app.currentUser.mongoClient("mongodb-atlas");
 
     const collection = mongo.db("localdrone").collection("users");
 

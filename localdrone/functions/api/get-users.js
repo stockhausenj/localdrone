@@ -1,29 +1,25 @@
-import { MongoClient } from "mongodb";
+import * as Realm from "realm-web";
+
+const {
+  BSON: { ObjectId },
+} = Realm;
 
 export async function onRequest(context) {
-  try {
-    // Get data from MongoDB
-    const data = await getDataFromMongoDB(context);
-    // Do something with the data or return it as a response
-    return new Response(JSON.stringify(data), {
-      headers: { "Content-Type": "application/json" },
-    });
-  } catch (error) {
-    return new Response("Error occurred: " + error.message, { status: 500 });
-  }
-}
+    const id = "localdrone-oajxf";
+    
+    const config = {
+        id,
+      };// replace this with your App ID
 
-async function getDataFromMongoDB(context) {
-  const mongoURI = context.env.MONGODB_URI; // Access the MongoDB connection string from the environment variable
-  const client = new MongoClient(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+    const app = new Realm.App(config);
 
-  try {
-    await client.connect();
-    const db = client.db();
-    const collection = db.collection("users"); // Replace "your-collection-name" with the name of your MongoDB collection
-    const queryResult = await collection.find({}).toArray();
-    return queryResult;
-  } finally {
-    client.close();
-  }
+    const credentials = Realm.Credentials.apiKey(context.env.MONGODB_APIKEY);
+
+    const user = await app.logIn(credentials);
+
+    const mongo = app.currentUser.mongoClient(DATA_SOURCE_NAME);
+
+    const collection = mongo.db("localdrone").collection("users");
+    
+    return new Response(collection)
 }

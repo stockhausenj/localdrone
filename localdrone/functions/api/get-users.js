@@ -20,6 +20,12 @@ export async function onRequest(context) {
     const mongo = app.currentUser.mongoClient(DATA_SOURCE_NAME);
 
     const collection = mongo.db("localdrone").collection("users");
+
+    const json = JSON.stringify(collection, null, 2);
     
-    return new Response(collection)
+    return new Response(json, {
+      headers: {
+        "content-type": "application/json;charset=UTF-8",
+      },
+    });
 }

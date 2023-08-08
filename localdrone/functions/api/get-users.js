@@ -1,7 +1,7 @@
 export async function onRequest(context) {
   try {
     // Get data from MongoDB
-    const data = await getDataFromMongoDB();
+    const data = await getDataFromMongoDB(context);
     // Do something with the data or return it as a response
     return new Response(JSON.stringify(data), {
       headers: { "Content-Type": "application/json" },
@@ -11,8 +11,8 @@ export async function onRequest(context) {
   }
 }
 
-async function getDataFromMongoDB() {
-  const mongoURI = MONGODB_URI; // Access the MongoDB connection string from the environment variable
+async function getDataFromMongoDB(context) {
+  const mongoURI = context.env.MONGODB_URI; // Access the MongoDB connection string from the environment variable
   const client = new MongoClient(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
 
   try {

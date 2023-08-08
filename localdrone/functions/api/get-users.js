@@ -1,3 +1,5 @@
+import { MongoClient } from "mongodb";
+
 export async function onRequest(context) {
   try {
     // Get data from MongoDB

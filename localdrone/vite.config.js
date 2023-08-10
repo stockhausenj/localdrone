@@ -8,7 +8,7 @@ export default defineConfig({
     open: true,
     cors: { origin: "*" },
     proxy: {
-      "/api/get-users": {
+      "/api/users": {
         target: "https://localdrone.io",
         changeOrigin: true,
       },

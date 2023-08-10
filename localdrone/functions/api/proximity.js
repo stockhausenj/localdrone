@@ -8,7 +8,7 @@ export async function onRequest(context) {
     const zipCode2 = params.get('zip2');
 
     if (!zipCode1 || !zipCode2) {
-      return new Response('Please provide both zip codes.', { status: 400 });
+      return new Response(JSON.stringify({ error: 'Please provide both zip codes.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
     }
 
     const [coords1, coords2] = await Promise.all([
@@ -18,11 +18,9 @@ export async function onRequest(context) {
 
     const distance = calculateDistance(coords1, coords2);
     
-    return new Response(`Distance between ${zipCode1} and ${zipCode2}: ${distance.toFixed(2)} km`, {
-      headers: { 'Content-Type': 'text/plain' }
-    });
+    return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
-    return new Response('An error occurred: ' + error.message, { status: 500 });
+    return new Response(JSON.stringify({ error: 'An error occurred: ' + error.message }), { status: 500, headers: { 'Content-Type': 'application/json' } });
   }
   
   
@@ -47,7 +45,7 @@ export async function onRequest(context) {
   }
   
   function calculateDistance(coords1, coords2) {
-    const earthRadius = 6371; // Earth's radius in kilometers
+    const earthRadius = 3958.8; // Earth's radius in miles
     const lat1 = degToRad(coords1.latitude);
     const lon1 = degToRad(coords1.longitude);
     const lat2 = degToRad(coords2.latitude);

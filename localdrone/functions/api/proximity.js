@@ -17,6 +17,13 @@ export async function onRequest(context) {
     ]);
 
     const distance = calculateDistance(coords1, coords2);
+
+    const result = {
+      zipCode1,
+      zipCode2,
+      distance: distance.toFixed(2),
+      unit: 'miles'
+    };
     
     return new Response(JSON.stringify(result), { headers: { 'Content-Type': 'application/json' } });
   } catch (error) {

@@ -4,7 +4,6 @@ import {
     useFetcher,
   } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
-import { getPilots } from "../pilots";
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -16,6 +15,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -28,29 +29,18 @@ import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lime, purple } from '@mui/material/colors';
 
+import { getUsers } from "../users";
+
 const theme = createTheme({
   palette: {
     primary: lime,
     secondary: purple,
   },
 });
-  
-export async function action({ request, params }) {
-  let formData = await request.formData();
-  return updateContact(params.contactId, {
-    favorite: formData.get("favorite") === "true",
-  });
-}
-  
-export async function loader({ params }) {
-  const pilots = await getPilots(params.contactId);
-  if (!pilots) {
-    throw new Response("", {
-      status: 400,
-      statusText: "encountered error while loading pilots",
-    });
-  }
-  return { contact };
+
+export async function loader() {
+  const users = await getUsers();
+  return { users };
 }
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -88,19 +78,28 @@ const services = [
   },
 ];
 
-export default function Pilots() {     
+export default function Pilots() {
   const [tableData, setTableData] = useState([]);
-  const apiUrl = '/api/get-users';
-  const fetchUsers = async () => {
-    const response = await fetch(apiUrl);
-    const json = await response.json();
-    console.log(json);
-    setTableData(json);
-  }
 
+  const fetchData = async () => {
+    let data = await getUsers();
+    setTableData(data);
+  }
+  
   useEffect(() => {
-    fetchUsers();
+    // Initial data fetch when the component mounts
+    fetchData();
   }, []);
+
+  const handleRefresh = () => {
+    // Call fetchData to refresh the data
+    fetchData();
+  };
+
+  const handleFilterChange = (event) => {
+    console.log(event.target);
+    console.log(event.target.value);
+  };
 
   return (
     <div id="pilots">
@@ -126,6 +125,7 @@ export default function Pilots() {
                 <TextField
                   label="ZIP Code"
                   name="zipcode"
+                  onChange={handleFilterChange}
                   sx={{
                     paddingRight: 2,
                   }}
@@ -134,6 +134,7 @@ export default function Pilots() {
                 <TextField
                   label="Proximity (miles)"
                   name="zipcodeDistance"
+                  onChange={handleFilterChange}
                   type="number"
                   sx={{
                     paddingRight: 2,
@@ -152,7 +153,7 @@ export default function Pilots() {
               </AccordionSummary>
               <AccordionDetails>
                 <FormGroup row>
-                  <FormControlLabel control={<Checkbox />} label="Aerial Photography and Videography" />
+                  <FormControlLabel control={<Checkbox id="abcd" onChange={handleFilterChange}/>} label="Aerial Photography and Videography" />
                   <FormControlLabel control={<Checkbox />} label="Surveying and Mapping" />
                   <FormControlLabel control={<Checkbox />} label="Search and Rescue" />
                 </FormGroup>
@@ -167,9 +168,17 @@ export default function Pilots() {
         </Accordion>
         <Stack direction="row" spacing={2}>
           <ThemeProvider theme={theme}>
-            <Button variant="contained" startIcon={<RefreshIcon />} onClick={fetchUsers}>
-              Refresh
-            </Button>     
+            <Button variant="contained" startIcon={<FilterAltIcon />} onClick={handleRefresh}>
+              Apply Filters
+            </Button>  
+            <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={handleRefresh}>
+              Reset Filters
+            </Button>  
+            <div style={{ marginLeft: 'auto' }}>
+              <Button variant="contained" startIcon={<RefreshIcon />} onClick={handleRefresh}>
+                Refresh
+              </Button>  
+            </div>   
           </ThemeProvider>
         </Stack>     
         <TableContainer component={Paper}>

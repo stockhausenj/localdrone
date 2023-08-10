@@ -7,7 +7,7 @@ import {
 import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import Pilots from "./routes/pilots";
+import Pilots, { loader as pilotsLoader } from "./routes/pilots";
 import Missions from "./routes/missions";
 import Index from "./routes/index";
 
@@ -27,6 +27,7 @@ const router = createBrowserRouter([
           {
             path: "pilots",
             element: <Pilots />,
+            loader: pilotsLoader,
           },
           {
             path: "missions",

@@ -18,6 +18,17 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import Grid from '@mui/material/Grid';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Typography from '@mui/material/Typography';
+import Select from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
   
 export async function action({ request, params }) {
   let formData = await request.formData();
@@ -66,6 +77,10 @@ const services = [
     value: 'wedding',
     label: 'wedding',
   },
+  {
+    value: 'ALL',
+    label: 'ALL',
+  },
 ];
 
 export default function Pilots() {     
@@ -84,48 +99,65 @@ export default function Pilots() {
 
   return (
     <div id="pilots">
-      <div id="search">
-        <Box
-          component="form"
-          sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <TextField
-            label="ZIP Code"
-            name="zipcode"
-            inputProps={{ 'data-lpignore': true, autocomplete: "off" }}
-          />
-          <TextField
-            label="Proximity (miles)"
-            name="zipcodeDistance"
-            type="number"
-            inputProps={{ 'data-lpignore': true, autocomplete: "off" }}
-          />
-          <TextField
-            label="Services"
-            name="services"
-            select
+      <Stack spacing={2}>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
           >
-                        {services.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-          </TextField>
-
-          <TextField
-            label="Hardware"
-            name="hardware"
-          />
-        </Box>
-      </div>
-      <div id="data">
-      <Button variant="contained" color="primary" startIcon={<RefreshIcon />} onClick={fetchUsers}>
-        Refresh
-      </Button>
+            <Typography>Filters</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Proximity</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <TextField
+                  label="ZIP Code"
+                  name="zipcode"
+                  sx={{
+                    paddingRight: 2,
+                  }}
+                  inputProps={{ 'data-lpignore': true, autocomplete: "off" }}
+                />
+                <TextField
+                  label="Proximity (miles)"
+                  name="zipcodeDistance"
+                  type="number"
+                  sx={{
+                    paddingRight: 2,
+                  }}
+                  inputProps={{ 'data-lpignore': true, autocomplete: "off" }}
+                />
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Service</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <FormGroup>
+                  <FormControlLabel control={<Checkbox defaultChecked />} label="Label" />
+                  <FormControlLabel required control={<Checkbox />} label="Required" />
+                  <FormControlLabel disabled control={<Checkbox />} label="Disabled" />
+                </FormGroup>
+              </AccordionDetails>
+            </Accordion>
+          </AccordionDetails>
+        </Accordion>
+        <Button variant="contained" color="primary" startIcon={<RefreshIcon />} onClick={fetchUsers}>
+          Refresh
+        </Button>          
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 700 }} aria-label="simple table">
             <TableHead>
@@ -150,7 +182,7 @@ export default function Pilots() {
             </TableBody>
           </Table>
         </TableContainer>
-      </div>
+      </Stack>
     </div>
   )
 }

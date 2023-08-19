@@ -63,24 +63,29 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const services = [
-  {
-    value: 'property',
-    label: 'property',
-  },
-  {
-    value: 'wedding',
-    label: 'wedding',
-  },
-  {
-    value: 'ALL',
-    label: 'ALL',
-  },
+const checkboxData = [
+  { id: '1', label: 'Aerial Photography and Videography', checked: false },
+  { id: '2', label: 'Surveying and Mapping', checked: true },
+  { id: '3', label: 'Search and Rescue', checked: false },
+  { id: '4', label: 'Precision Agriculture', checked: false },
+  { id: '5', label: 'Infrastructure Inspection', checked: false },
+  { id: '6', label: 'Environmental Monitoring', checked: false },
 ];
 
 export default function Pilots() {
   const [tableData, setTableData] = useState([]);
+  const [zipcode, setZipcode] = useState([]);
+  const [proximity, setProximity] = useState([]);
 
+  const [checkboxes, setCheckboxes] = useState(checkboxData);
+  const handleCheckboxChange = (id) => {
+    setCheckboxes((prevCheckboxes) =>
+      prevCheckboxes.map((checkbox) =>
+        checkbox.id === id ? { ...checkbox, checked: !checkbox.checked } : checkbox
+      )
+    );
+  };
+  
   const fetchData = async () => {
     let data = await getUsers();
     setTableData(data);
@@ -96,9 +101,28 @@ export default function Pilots() {
     fetchData();
   };
 
-  const handleFilterChange = (event) => {
+  const handleZipcodeChange = (event) => {
+    setZipcode(event.target.value);
+  };
+
+  const handleProximityChange = (event) => {
+    setProximity(event.target.value);
+  };
+
+  const handleFilters = (event) => {
+    console.log('zipcode: ' + zipcode);
+    console.log('proximity: ' + proximity);
+  };
+
+  const handleClearFilters = (event) => {
+    setZipcode('');
+    setProximity('');
+  };
+
+  const handleCheckBox = (event) => {
+    setServices
     console.log(event.target);
-    console.log(event.target.value);
+    console.log(event.target.id);
   };
 
   return (
@@ -125,7 +149,8 @@ export default function Pilots() {
                 <TextField
                   label="ZIP Code"
                   name="zipcode"
-                  onChange={handleFilterChange}
+                  value={zipcode}
+                  onChange={handleZipcodeChange}
                   sx={{
                     paddingRight: 2,
                   }}
@@ -134,7 +159,8 @@ export default function Pilots() {
                 <TextField
                   label="Proximity (miles)"
                   name="zipcodeDistance"
-                  onChange={handleFilterChange}
+                  value={proximity}
+                  onChange={handleProximityChange}
                   type="number"
                   sx={{
                     paddingRight: 2,
@@ -153,14 +179,9 @@ export default function Pilots() {
               </AccordionSummary>
               <AccordionDetails>
                 <FormGroup row>
-                  <FormControlLabel control={<Checkbox id="abcd" onChange={handleFilterChange}/>} label="Aerial Photography and Videography" />
-                  <FormControlLabel control={<Checkbox />} label="Surveying and Mapping" />
-                  <FormControlLabel control={<Checkbox />} label="Search and Rescue" />
-                </FormGroup>
-                <FormGroup row>
-                  <FormControlLabel control={<Checkbox />} label="Precision Agriculture" />
-                  <FormControlLabel control={<Checkbox />} label="Infrastructure Inspection" />
-                  <FormControlLabel control={<Checkbox />} label="Environmental Monitoring" />
+                {checkboxes.map((checkbox) => (
+                  <FormControlLabel key={checkbox.id} control={<Checkbox id={checkbox.id}/>} label={checkbox.label} />
+                ))}
                 </FormGroup>
               </AccordionDetails>
             </Accordion>
@@ -168,10 +189,10 @@ export default function Pilots() {
         </Accordion>
         <Stack direction="row" spacing={2}>
           <ThemeProvider theme={theme}>
-            <Button variant="contained" startIcon={<FilterAltIcon />} onClick={handleRefresh}>
+            <Button variant="contained" startIcon={<FilterAltIcon />} onClick={handleFilters}>
               Apply Filters
             </Button>  
-            <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={handleRefresh}>
+            <Button variant="contained" startIcon={<FilterAltOffIcon />} onClick={handleClearFilters}>
               Reset Filters
             </Button>  
             <div style={{ marginLeft: 'auto' }}>

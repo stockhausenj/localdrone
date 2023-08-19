@@ -20,7 +20,18 @@ export default function Root() {
           <img src={drone} className="App-logo" alt="logo" />
         </div>
         <nav> 
-          <NavLink to={`pilots`}>Pilots</NavLink>
+          <NavLink
+            to={`pilots`}
+            className={({ isActive, isPending }) =>
+            isActive
+              ? "active"
+              : isPending
+              ? "pending"
+              : ""
+          }
+          >
+            Pilots
+          </NavLink>
           <NavLink to={`missions`}>Missions</NavLink>
         </nav>     
       </div>

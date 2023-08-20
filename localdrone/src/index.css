@@ -1,5 +1,7 @@
 html {
   box-sizing: border-box;
+  height: 100vh;
+  width: 100vw;
 }
 *,
 *:before,
@@ -22,6 +24,8 @@ code {
 
 html,
 body {
+  height: 100vh;
+  width: 100vw;
   margin: 0;
   line-height: 1.5;
   color: #121212;
@@ -96,13 +100,18 @@ form[action$="destroy"] button {
 }
 
 #root {
-  display: flex;
+  height: 100%;
   width: 100%;
+  display: flex;
   background: #a8a8a8;
 }
 
 #search {
   height: 5rem;
+}
+
+#pilots {
+  height: 100%;
 }
 
 #data {
@@ -111,6 +120,7 @@ form[action$="destroy"] button {
 
 #sidebar {
   width: 22rem;
+  height: 100vh;
   background-color: #282c34;
   border-right: solid 1px #e3e3e3;
   display: flex;

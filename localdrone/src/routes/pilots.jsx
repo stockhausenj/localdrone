@@ -13,6 +13,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';  
 import Button from '@mui/material/Button';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -125,9 +126,14 @@ export default function Pilots() {
     console.log(event.target.id);
   };
 
+  const stackStyle = {
+    height: '100%',
+    // Add any other desired styles here
+  };
+
   return (
     <div id="pilots">
-      <Stack spacing={2}>
+      <Stack spacing={2} style={stackStyle}>
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -201,9 +207,9 @@ export default function Pilots() {
               </Button>  
             </div>   
           </ThemeProvider>
-        </Stack>     
+        </Stack>  
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="simple table">
+          <Table stickyHeader aria-label="simple table">
             <TableHead>
               <StyledTableRow>
                 <StyledTableCell>Username</StyledTableCell>
@@ -226,7 +232,7 @@ export default function Pilots() {
             </TableBody>
           </Table>
         </TableContainer>
-      </Stack>
+      </Stack> 
     </div>
   )
 }

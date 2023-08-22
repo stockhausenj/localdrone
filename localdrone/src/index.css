@@ -173,6 +173,11 @@ form[action$="destroy"] button {
   background-image: none;
 }
 
+.bottom-link {
+  bottom: 0;
+  position: absolute;
+}
+
 #search-spinner {
   width: 1rem;
   height: 1rem;
@@ -398,8 +403,11 @@ i {
 .App-logo {
   max-width: 100%;
   pointer-events: none;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding: 1rem;
+}
+
+.App-logo-div {
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: no-preference) {

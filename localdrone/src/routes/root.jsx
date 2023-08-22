@@ -1,39 +1,58 @@
-import { useEffect } from "react";
+import React from 'react';
 import {
   Outlet,
   NavLink,
-  useLoaderData,
-  Form,
-  redirect,
-  useNavigation,
-  useSubmit,
 } from "react-router-dom";
-import { getPilots } from "../pilots";
-import { getMissions } from "../missions";
 import drone from '../drone.svg';
+import Drawer from '@mui/material/Drawer';
+import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
+import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+
+const drawerWidth = 300;
+
+const CustomNavLink = React.forwardRef((props, ref) => (
+  <NavLink innerRef={ref} {...props} />
+));
 
 export default function Root() {
   return (
     <>
-      <div id="sidebar">
-        <div>
-          <img src={drone} className="App-logo" alt="logo" />
-        </div>
-        <nav> 
-          <NavLink
-            to={`pilots`}
-            className={({ isActive, isPending }) =>
-            isActive
-              ? "active"
-              : isPending
-              ? "pending"
-              : ""
-          }
-          >
-            Pilots
-          </NavLink>
-          <NavLink to={`missions`}>Missions</NavLink>
-        </nav>     
+      <div>
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant="permanent"
+          anchor="left"
+        >
+          <div className="App-logo-div">
+            <img src={drone} className="App-logo" alt="logo" />
+          </div>
+          <Divider />
+          <List>
+            <ListItem  sx={{padding: 0}}>
+              <ListItemButton component={CustomNavLink} to={'pilots'}>
+                <ListItemText primary={'Pilots'} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem  sx={{padding: 0}}>
+              <ListItemButton component={CustomNavLink} to={'missions'}>
+                <ListItemText primary={'Missions'} />
+              </ListItemButton>
+            </ListItem>
+            <ListItem  sx={{padding: 0}}>
+              <ListItemButton component={CustomNavLink} to={'login'}>
+                <ListItemText primary={'Login'} />
+              </ListItemButton>
+            </ListItem>
+          </List>
+        </Drawer>  
       </div>
       <div id="detail">
         <Outlet />

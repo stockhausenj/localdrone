@@ -9,6 +9,7 @@ import Root from "./routes/root";
 import ErrorPage from "./error-page";
 import Pilots, { loader as pilotsLoader } from "./routes/pilots";
 import Missions from "./routes/missions";
+import Login from "./routes/login";
 import Index from "./routes/index";
 
 const router = createBrowserRouter([
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <Index />
+          },
+          {
+            path: "login",
+            element: <Login />,
           },
           {
             path: "pilots",

@@ -46,7 +46,10 @@ export default function Root() {
                 <ListItemText primary={'Missions'} />
               </ListItemButton>
             </ListItem>
-            <ListItem  sx={{padding: 0}}>
+          </List>
+          <List style={{ marginTop: `auto` }}>
+          <Divider style={{marginBottom: 8}}/>
+            <ListItem  sx={{padding: 0}} alignToBottom>
               <ListItemButton component={CustomNavLink} to={'login'}>
                 <ListItemText primary={'Login'} />
               </ListItemButton>

@@ -5,4 +5,4 @@ Create or find a mission.
 ## Diagrams
 ### System
 
-![alt text](https://github.com/stockhausenj/localdrone/blob/main/localdrone-system.png?raw=true)
+<img src="https://github.com/stockhausenj/localdrone/blob/main/localdrone-system-latest.png?raw=true">

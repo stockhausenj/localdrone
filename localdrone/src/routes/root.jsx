@@ -11,8 +11,10 @@ import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui
 
 const drawerWidth = 300;
 
-const CustomNavLink = React.forwardRef((props, ref) => (
-  <NavLink innerRef={ref} {...props} />
+const CustomNavLink = React.forwardRef((props, _) => (
+  <NavLink 
+    {...props}
+  />
 ));
 
 export default function Root() {
@@ -49,7 +51,7 @@ export default function Root() {
           </List>
           <List style={{ marginTop: `auto` }}>
           <Divider style={{marginBottom: 8}}/>
-            <ListItem  sx={{padding: 0}} alignToBottom>
+            <ListItem  sx={{padding: 0}}>
               <ListItemButton component={CustomNavLink} to={'login'}>
                 <ListItemText primary={'Login'} />
               </ListItemButton>

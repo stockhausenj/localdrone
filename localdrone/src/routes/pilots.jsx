@@ -46,7 +46,7 @@ export async function loader() {
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#282c34",
+    backgroundColor: '#595959',
     color: theme.palette.common.white,
   },
   [`&.${tableCellClasses.body}`]: {
@@ -56,7 +56,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
-    backgroundColor: "#282c34",
+    backgroundColor: '#595959',
   },
   // hide last border
   '&:last-child td, &:last-child th': {

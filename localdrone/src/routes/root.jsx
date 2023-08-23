@@ -9,7 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
-const drawerWidth = 300;
+const drawerWidth = 250;
 
 const CustomNavLink = React.forwardRef((props, _) => (
   <NavLink 
@@ -28,6 +28,8 @@ export default function Root() {
             '& .MuiDrawer-paper': {
               width: drawerWidth,
               boxSizing: 'border-box',
+              backgroundColor: '#595959',
+              color: '#fff'
             },
           }}
           variant="permanent"
@@ -36,7 +38,7 @@ export default function Root() {
           <div className="App-logo-div">
             <img src={drone} className="App-logo" alt="logo" />
           </div>
-          <Divider />
+          <Divider sx={{backgroundColor: '#cddc39'}}/>
           <List>
             <ListItem  sx={{padding: 0}}>
               <ListItemButton component={CustomNavLink} to={'pilots'}>
@@ -50,7 +52,7 @@ export default function Root() {
             </ListItem>
           </List>
           <List style={{ marginTop: `auto` }}>
-          <Divider style={{marginBottom: 8}}/>
+          <Divider style={{marginBottom: 8}} sx={{backgroundColor: '#cddc39'}}/>
             <ListItem  sx={{padding: 0}}>
               <ListItemButton component={CustomNavLink} to={'login'}>
                 <ListItemText primary={'Login'} />

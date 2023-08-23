@@ -21,7 +21,9 @@ export async function onRequest(context) {
 
     const collection = mongo.db("localdrone").collection("users");
 
-    const localdroneUsers = await collection.find({});
+    const projection = { username: 1, zipcode: 1, missionsCompleted: 1, lastLogin: 1 };
+
+    const localdroneUsers = await collection.find({}, { projection });
 
     const json = JSON.stringify(localdroneUsers, null, 2);
     

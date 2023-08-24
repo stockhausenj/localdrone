@@ -424,3 +424,8 @@ i {
     transform: rotate(360deg);
   }
 }
+
+.cf-turnstile-outer-div {
+  padding-top: 1rem;
+  text-align: center;
+}

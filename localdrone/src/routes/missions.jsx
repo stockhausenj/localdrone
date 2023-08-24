@@ -26,7 +26,7 @@ import {
   export default function Missions() {
     return (
       <div>
-        missionsDiv
+        missions comming soon
       </div>
     )
   }

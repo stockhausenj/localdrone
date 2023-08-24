@@ -8,6 +8,9 @@ import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import { List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
+import WorkIcon from '@mui/icons-material/Work';
 
 const drawerWidth = 250;
 
@@ -40,13 +43,27 @@ export default function Root() {
           </div>
           <Divider sx={{backgroundColor: '#cddc39'}}/>
           <List>
+          <ListItem  sx={{padding: 0}}>
+              <ListItemButton component={CustomNavLink} to={'/'}>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary={'Home'} />
+              </ListItemButton>
+            </ListItem>
             <ListItem  sx={{padding: 0}}>
               <ListItemButton component={CustomNavLink} to={'pilots'}>
+                <ListItemIcon>
+                  <VideogameAssetIcon />
+                </ListItemIcon>
                 <ListItemText primary={'Pilots'} />
               </ListItemButton>
             </ListItem>
             <ListItem  sx={{padding: 0}}>
               <ListItemButton component={CustomNavLink} to={'missions'}>
+                <ListItemIcon>
+                  <WorkIcon />
+                </ListItemIcon>
                 <ListItemText primary={'Missions'} />
               </ListItemButton>
             </ListItem>

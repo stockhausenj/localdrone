@@ -1,3 +1,17 @@
+export async function auth(email, password) {
+  const apiUrl = '/api/auth';
+  const base64Credentials = btoa(`${email}:${password}`);
+  const headers = {
+    'Authorization': `Basic ${base64Credentials}`
+  };
+  const response = await fetch(apiUrl, {
+    headers: headers,
+  });
+  //const json = await response.json();
+  const json = await response;
+  return json;
+}
+
 export async function getUsers() {
   const apiUrl = '/api/users';
   const response = await fetch(apiUrl);

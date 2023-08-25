@@ -16,6 +16,9 @@ import {
     useLoaderData,
     useFetcher,
   } from "react-router-dom";
+
+import { auth } from "../users";
+
   
 const theme = createTheme({
   palette: {
@@ -43,6 +46,7 @@ export default function Login() {
       email: data.get("email"),
       password: data.get("password"),
     });
+    auth(data.get("email"), data.get("password"));
   };
 
   useEffect(() => {

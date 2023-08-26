@@ -46,10 +46,10 @@ export async function onRequest(context) {
       const [result, err] = await verifyAuth(authEmail, authPass);
       message = {status: result, err: err};
     } else {
-      message = {status: false, err: 'invalid auth method'}
+      message = {status: false, err: 'invalid auth method'};
     }
   } else {
-    message = {status: false, err: 'missing auth header'}
+    message = {status: false, err: 'missing auth header'};
   }
 
   const json = JSON.stringify(message, null, 2);

@@ -1,10 +1,5 @@
 import * as Realm from "realm-web";
 import bcrypt from 'bcryptjs';
-import { ResetTvOutlined, TurnedIn } from "@mui/icons-material";
-
-const {
-  BSON: { ObjectId },
-} = Realm;
 
 export async function onRequest(context) {
   async function mongoClient() {
@@ -26,19 +21,21 @@ export async function onRequest(context) {
     const query = { email: authEmail };
     const projection = { email: 1, password: 1 };
     const user = await collection.findOne(query, { projection });
-    console.log(user);
+
+    if (user === null) {
+      return false, 'user not found';
+    }
     const match = await bcrypt.compare(authPass, user.password);
-    console.log(match);
 
     if(match) {
-      return true;
+      return true, null;
     } else {
-      return false;
+      return false, 'invalid password';
     }
   }
 
   const authorizationHeader = context.request.headers.get("Authorization");
-  const message = {result: 'fail'};
+  const message = {};
   if (authorizationHeader) {
     const [authType, authToken] = authorizationHeader.split(" ");
 
@@ -46,13 +43,17 @@ export async function onRequest(context) {
       const decodedToken = atob(authToken);
       const [authEmail, authPass] = decodedToken.split(":");
       
-      validAuth = await verifyAuth(authEmail, authPass);
-      message.result = validAuth;
+      const [result, err] = await verifyAuth(authEmail, authPass);
+      message = {status: result, err: err};
+    } else {
+      message = {status: false, err: 'invalid auth method'}
     }
+  } else {
+    message = {status: false, err: 'missing auth header'}
   }
 
   const json = JSON.stringify(message, null, 2);
-  
+  console.log(json);
   return new Response(json, {
     headers: {
       "content-type": "application/json;charset=UTF-8",

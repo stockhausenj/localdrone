@@ -26,7 +26,9 @@ export async function onRequest(context) {
       console.log('pre bcrypt');
       // Generate a salt and hash the password
       bcrypt.genSalt(saltRounds, function(err, salt) {
+          console.log('salt: ', salt);
           bcrypt.hash(plainPassword, salt, function(err, hash) {
+            console.log('hash: ', hash);
               if (err) {
                   console.error(err);
               } else {

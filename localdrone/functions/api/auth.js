@@ -35,7 +35,7 @@ export async function onRequest(context) {
   }
 
   const authorizationHeader = context.request.headers.get("Authorization");
-  const message = {};
+  let message = {};
   if (authorizationHeader) {
     const [authType, authToken] = authorizationHeader.split(" ");
 

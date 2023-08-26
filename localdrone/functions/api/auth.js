@@ -21,7 +21,7 @@ export async function onRequest(context) {
   }
 
   async function verifyAuth(authEmail, authPass) {
-    const mongo = mongoClient();
+    const mongo = await mongoClient();
     const collection = mongo.db("localdrone").collection("users");
     const query = { email: authEmail };
     const projection = { email: 1, password: 1 };

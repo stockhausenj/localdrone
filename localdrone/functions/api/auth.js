@@ -12,7 +12,6 @@ export async function onRequest(context) {
     const [authType, authToken] = authorizationHeader.split(" ");
 
     if (authType === "Basic") {
-      // You might want to decode the base64 encoded token if needed
       const decodedToken = atob(authToken);
       console.log("Basic token:", decodedToken);
       const [authEmail, password] = decodedToken.split(":");
@@ -20,26 +19,17 @@ export async function onRequest(context) {
       console.log("Email:", authEmail);
       console.log("Password:", password);
 
-      const saltRounds = 10; // Number of salt rounds
+      const saltRounds = 10;
 
       const plainPassword = password;
-      console.log('pre bcrypt');
-      // Generate a salt and hash the password
-      bcrypt.genSalt(saltRounds, function(err, salt) {
-          console.log('salt: ', salt);
-          bcrypt.hash(plainPassword, salt, function(err, hash) {
-            console.log('hash: ', hash);
-              if (err) {
-                  console.error(err);
-              } else {
-                  console.log('Hashed Password:', hash);
 
-                  // Store the hash in the MongoDB Atlas database
-                  // Your database code here
-              }
-          });
-      });
-      console.log('post bcrypt');
+      const salt = await bcrypt.genSaltSync(saltRounds);
+
+      console.log('salt: ', salt);
+ 
+      const hashedPassword = await bcrypt.hashSync(password, salt);
+ 
+      console.log('Hashed Password:', hashedPassword);
     }
   }
 

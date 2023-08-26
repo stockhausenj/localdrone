@@ -54,5 +54,11 @@ export async function onRequest(context) {
     },
   });
   */
- return "idk";
+  const data = {
+    hello: "world",
+  };
+
+  const json = JSON.stringify(data, null, 2);
+
+  return new Response(json);
 }

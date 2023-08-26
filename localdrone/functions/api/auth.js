@@ -1,4 +1,5 @@
 import * as Realm from "realm-web";
+import bcrypt from 'bcryptjs';
 
 const {
   BSON: { ObjectId },
@@ -18,6 +19,24 @@ export async function onRequest(context) {
       
       console.log("Email:", authEmail);
       console.log("Password:", password);
+
+      const saltRounds = 10; // Number of salt rounds
+
+      const plainPassword = password;
+
+      // Generate a salt and hash the password
+      bcrypt.genSalt(saltRounds, function(err, salt) {
+          bcrypt.hash(plainPassword, salt, function(err, hash) {
+              if (err) {
+                  console.error(err);
+              } else {
+                  console.log('Hashed Password:', hash);
+
+                  // Store the hash in the MongoDB Atlas database
+                  // Your database code here
+              }
+          });
+      });
     }
   }
 

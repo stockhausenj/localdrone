@@ -23,7 +23,7 @@ export async function onRequest(context) {
       const saltRounds = 10; // Number of salt rounds
 
       const plainPassword = password;
-
+      console.log('pre bcrypt');
       // Generate a salt and hash the password
       bcrypt.genSalt(saltRounds, function(err, salt) {
           bcrypt.hash(plainPassword, salt, function(err, hash) {
@@ -37,6 +37,7 @@ export async function onRequest(context) {
               }
           });
       });
+      console.log('post bcrypt');
     }
   }
 

@@ -23,14 +23,14 @@ export async function onRequest(context) {
     const user = await collection.findOne(query, { projection });
 
     if (user === null) {
-      return false, 'user not found';
+      return [false, 'user not found'];
     }
     const match = await bcrypt.compare(authPass, user.password);
 
     if(match) {
-      return true, null;
+      return [true, null];
     } else {
-      return false, 'invalid password';
+      return [false, 'invalid password'];
     }
   }
 

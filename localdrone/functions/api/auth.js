@@ -1,6 +1,7 @@
 import * as Realm from "realm-web";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 export async function onRequest(context) {
   async function mongoClient() {

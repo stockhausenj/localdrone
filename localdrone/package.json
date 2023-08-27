@@ -24,7 +24,6 @@
     "realm-web": "^2.0.0",
     "sort-by": "^1.2.0",
     "stream": "^0.0.2",
-    "util": "^0.12.5",
     "wrangler": "^3.4.0"
   },
   "devDependencies": {

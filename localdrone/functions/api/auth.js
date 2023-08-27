@@ -1,4 +1,5 @@
 import * as Realm from "realm-web";
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 
 export async function onRequest(context) {
@@ -15,27 +16,38 @@ export async function onRequest(context) {
     return mongo;
   }
 
-  async function verifyAuth(authEmail, authPass) {
+  async function verifyAuth(authEmail, authPass, response) {
     const mongo = await mongoClient();
     const collection = mongo.db("localdrone").collection("users");
     const query = { email: authEmail };
-    const projection = { email: 1, password: 1 };
+    const projection = { email: 1, username: 1, password: 1 };
     const user = await collection.findOne(query, { projection });
 
     if (user === null) {
-      return [false, 'user not found'];
+      response.err = 'user not found';
+      return response;
     }
     const match = await bcrypt.compare(authPass, user.password);
 
     if(match) {
-      return [true, null];
+      const tokenExpiration = Math.floor(Date.now() / 1000) + (60 * 60); // 1 hour in seconds
+      const jwtPayload = {
+        sub: user.email, // Subject (user identifier)
+        username: user.username,
+        exp: tokenExpiration // Expiration time
+      };
+      const jwToken = jwt.sign(jwtPayload, context.env.JWT_SECRET);
+      response.jwt = jwToken;
+      response.status = true;
+      return response;
     } else {
-      return [false, 'invalid password'];
+      response.err = 'invalid password';
+      return response;
     }
   }
 
   const authorizationHeader = context.request.headers.get("Authorization");
-  let message = {};
+  let message = {'status': false, 'jwt': null, 'err': null};
   if (authorizationHeader) {
     const [authType, authToken] = authorizationHeader.split(" ");
 
@@ -43,8 +55,7 @@ export async function onRequest(context) {
       const decodedToken = atob(authToken);
       const [authEmail, authPass] = decodedToken.split(":");
       
-      const [result, err] = await verifyAuth(authEmail, authPass);
-      message = {status: result, err: err};
+      message = await verifyAuth(authEmail, authPass, message);
     } else {
       message = {status: false, err: 'invalid auth method'};
     }

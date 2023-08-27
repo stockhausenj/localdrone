@@ -30,7 +30,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lime, purple } from '@mui/material/colors';
 
-import { getUsers } from "../users";
+import { getPilots } from "../users";
 
 const theme = createTheme({
   palette: {
@@ -40,7 +40,7 @@ const theme = createTheme({
 });
 
 export async function loader() {
-  const users = await getUsers();
+  const users = await getPilots();
   return { users };
 }
 
@@ -88,7 +88,7 @@ export default function Pilots() {
   };
   
   const fetchData = async () => {
-    let data = await getUsers();
+    let data = await getPilots();
     setTableData(data);
   }
   

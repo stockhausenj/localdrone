@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -11,6 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lime, purple } from '@mui/material/colors';
+import Alert from '@mui/material/Alert';
 import {
     Form,
     useLoaderData,
@@ -37,16 +38,21 @@ function _turnstileCb() {
   
 
 export default function Login() {
+  const [showBanner, setShowBanner] = useState(false);
+  const [bannerType, setBannerType] = useState('success');
+  const [bannerMessage, setBannerMessage] = useState('');
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
+    setShowBanner(false);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log(data);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    auth(data.get("email"), data.get("password"));
+    const authResponse = await auth(data.get("email"), data.get("password"));
+    console.log(authResponse);
+    if (authResponse.status === false) {
+      setShowBanner(true);
+      setBannerType('error');
+      setBannerMessage(authResponse.err);
+    }
   };
 
   useEffect(() => {
@@ -66,6 +72,7 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
+        {showBanner && <Alert sx={{marginTop: "1rem"}} severity={bannerType}>{bannerMessage}</Alert>}
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <ThemeProvider theme={theme}>
             <TextField

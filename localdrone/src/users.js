@@ -7,12 +7,11 @@ export async function auth(email, password) {
   const response = await fetch(apiUrl, {
     headers: headers,
   });
-  //const json = await response.json();
-  const json = await response;
+  const json = response.json();
   return json;
 }
 
-export async function getUsers() {
+export async function getPilots() {
   const apiUrl = '/api/users';
   const response = await fetch(apiUrl);
   const json = await response.json();

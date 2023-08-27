@@ -12,6 +12,10 @@ export default defineConfig({
         target: "https://localdrone.io",
         changeOrigin: true,
       },
+      "/api/auth": {
+        target: "https://localdrone.io",
+        changeOrigin: true,
+      },
     },
   }
 })

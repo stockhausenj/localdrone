@@ -1,9 +1,6 @@
 import * as Realm from "realm-web";
-import jwt from 'node:jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import { util } from 'node:util';
-import { crypto } from 'node:crypto';
-import { stream  } from 'node:stream';
+import jwt from '@tsndr/cloudflare-worker-jwt'
 
 export async function onRequest(context) {
   async function mongoClient() {
@@ -39,7 +36,7 @@ export async function onRequest(context) {
         username: user.username,
         exp: tokenExpiration // Expiration time
       };
-      const jwToken = jwt.sign(jwtPayload, context.env.JWT_SECRET);
+      const jwToken = await jwt.sign(jwtPayload, context.env.JWT_SECRET);
       response.jwt = jwToken;
       response.status = true;
       return response;

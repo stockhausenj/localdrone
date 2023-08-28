@@ -1,5 +1,5 @@
 import * as Realm from "realm-web";
-import jwt from 'jsonwebtoken';
+import jwt from 'node:jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import { util } from 'node:util';
 import { crypto } from 'node:crypto';

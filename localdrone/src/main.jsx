@@ -11,6 +11,7 @@ import Pilots, { loader as pilotsLoader } from "./routes/pilots";
 import Missions from "./routes/missions";
 import Login from "./routes/login";
 import Index from "./routes/index";
+import User from "./routes/user";
 
 const router = createBrowserRouter([
   {
@@ -32,11 +33,14 @@ const router = createBrowserRouter([
           {
             path: "pilots",
             element: <Pilots />,
-            loader: pilotsLoader,
           },
           {
             path: "missions",
             element: <Missions />,
+          },
+          {
+            path: "user/:userId",
+            element: <User />,
           },
         ],
       },

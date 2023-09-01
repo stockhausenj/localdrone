@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { createContext, useState } from 'react';
+import { AuthContext } from '../contexts.jsx';
 import {
   Outlet,
   NavLink,
@@ -21,6 +22,11 @@ const CustomNavLink = React.forwardRef((props, _) => (
 ));
 
 export default function Root() {
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  console.log('from root ' + currentUser);
+
   return (
     <>
       <div>
@@ -71,15 +77,22 @@ export default function Root() {
           <List style={{ marginTop: `auto` }}>
           <Divider style={{marginBottom: 8}} sx={{backgroundColor: '#cddc39'}}/>
             <ListItem  sx={{padding: 0}}>
+              {currentUser == null &&
               <ListItemButton component={CustomNavLink} to={'login'}>
                 <ListItemText primary={'Login'} />
-              </ListItemButton>
+              </ListItemButton>}
+              {currentUser != null &&
+              <ListItemButton component={CustomNavLink} to={'user/1234'}>
+                <ListItemText primary={'Profile'} />
+              </ListItemButton>}
             </ListItem>
           </List>
         </Drawer>  
       </div>
       <div id="detail">
-        <Outlet />
+        <AuthContext.Provider value={setCurrentUser}>
+          <Outlet />
+        </AuthContext.Provider>
       </div>
     </>
   );

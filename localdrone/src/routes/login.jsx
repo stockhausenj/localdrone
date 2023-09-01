@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { AuthContext } from '../contexts.jsx';
 
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -13,14 +12,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lime, purple } from '@mui/material/colors';
 import Alert from '@mui/material/Alert';
 import {
-    Form,
-    useLoaderData,
-    useFetcher,
+    useNavigate,
   } from "react-router-dom";
 
 import { auth } from "../users";
 
-  
 const theme = createTheme({
   palette: {
     primary: lime,
@@ -35,23 +31,33 @@ function _turnstileCb() {
     size: 'normal',
   });
 }
-  
 
 export default function Login() {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [bannerType, setBannerType] = useState('success');
   const [bannerMessage, setBannerMessage] = useState('');
+  //const [currentUser, setCurrentUser] = useContext(AuthContext);
+  const currentUser = useContext(AuthContext);
+
 
   async function handleSubmit(event) {
     setShowBanner(false);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const authResponse = await auth(data.get("email"), data.get("password"));
-    console.log(authResponse);
+    console.log(authResponse);    
     if (authResponse.status === false) {
       setShowBanner(true);
       setBannerType('error');
       setBannerMessage(authResponse.err);
+    } else {
+      localStorage.setItem('jwt', authResponse.jwt);
+      setIsLoggedIn(true);
+      currentUser("jjjjjjjjjjjj");
+      useContext
+      navigate('/user/1234');
     }
   };
 

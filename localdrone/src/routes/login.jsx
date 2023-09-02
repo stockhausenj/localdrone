@@ -38,7 +38,6 @@ export default function Login() {
   const [showBanner, setShowBanner] = useState(false);
   const [bannerType, setBannerType] = useState('success');
   const [bannerMessage, setBannerMessage] = useState('');
-  //const [currentUser, setCurrentUser] = useContext(AuthContext);
   const currentUser = useContext(AuthContext);
 
 
@@ -54,8 +53,11 @@ export default function Login() {
       setBannerMessage(authResponse.err);
     } else {
       localStorage.setItem('jwt', authResponse.jwt);
+      const tokens = authResponse.jwt.split(".");
+      const userData = JSON.stringify({name: JSON.parse(atob(tokens[1])).username});
+      currentUser(userData);
+      localStorage.setItem('currentUser', userData);
       setIsLoggedIn(true);
-      currentUser("jjjjjjjjjjjj");
       useContext
       navigate('/user/1234');
     }

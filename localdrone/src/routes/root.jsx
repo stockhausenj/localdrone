@@ -23,9 +23,13 @@ const CustomNavLink = React.forwardRef((props, _) => (
 
 export default function Root() {
   //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('currentUser'));
 
-  console.log('from root ' + currentUser);
+  let userData = null;
+
+  if (currentUser != null) {
+    userData = JSON.parse(currentUser);
+  }
 
   return (
     <>
@@ -83,7 +87,7 @@ export default function Root() {
               </ListItemButton>}
               {currentUser != null &&
               <ListItemButton component={CustomNavLink} to={'user/1234'}>
-                <ListItemText primary={'Profile'} />
+                <ListItemText primary={userData.name} />
               </ListItemButton>}
             </ListItem>
           </List>

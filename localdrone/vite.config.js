@@ -9,11 +9,11 @@ export default defineConfig({
     cors: { origin: "*" },
     proxy: {
       "/api/users": {
-        target: "https://localdrone.io",
+        target: "http://localhost:8788",
         changeOrigin: true,
       },
       "/api/auth": {
-        target: "https://localdrone.io",
+        target: "http://localhost:8788",
         changeOrigin: true,
       },
     },

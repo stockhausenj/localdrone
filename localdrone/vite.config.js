@@ -8,7 +8,7 @@ export default defineConfig({
     open: true,
     cors: { origin: "*" },
     proxy: {
-      "/api/users": {
+      "/api/pilots": {
         target: "http://localhost:8788",
         changeOrigin: true,
       },

@@ -30,7 +30,7 @@ import Checkbox from '@mui/material/Checkbox';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { lime, purple } from '@mui/material/colors';
 
-import { getPilots } from "../users";
+import { getPilots } from "../pilots";
 
 const theme = createTheme({
   palette: {
